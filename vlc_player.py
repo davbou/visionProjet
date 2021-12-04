@@ -4,6 +4,7 @@ from time import sleep
 
 
 PATH = r"C:\Users\mpbel\Music\20syl"
+TIME_BUFFER = 2
 
 class VLCPlayer:
     def __init__(self, path):
@@ -18,20 +19,30 @@ class VLCPlayer:
         self.player.set_media_list(liste_lecture)
     
     def play(self):
-        self.player.play()
+        if not self.player.is_playing():
+            self.player.play()
+            self.time_buffer()
 
     def pause(self):
-        self.player.pause()
+        if self.player.is_playing():
+            self.player.pause()
+            self.time_buffer()
 
     def stop(self):
-        self.player.stop()
+        if self.player.is_playing():
+            self.player.stop()
+            self.time_buffer()
 
     def toune_suivante(self):
         self.player.next()
+        self.time_buffer()
 
     def toune_precedente(self):
         self.player.previous()
+        self.time_buffer()
 
+    def time_buffer(self):
+        sleep(TIME_BUFFER)
 
 if __name__ == "__main__":
     player = VLCPlayer(PATH)
