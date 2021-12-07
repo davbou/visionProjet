@@ -20,4 +20,9 @@ Installez les librairies requises
 
 Pour faire rouler le projet sur votre ordinateur personnel, il vous suffit désormais d'exécuter la commande
 
-`python main.py`
+`python gesture_music_player.py`
+
+Par défaut, le code ira lire le dossier `music` situé à la racine de votre projet pour obtenir son répertoire de chansons.
+Le répertoire fourni contient des classiques des fêtes, mais vous pouvez modifier son contenu librement ou encore spécifier votre propre dossier contenant le répertoire de fichiers audio au format mp3 de votre choix :
+
+`python gesture_music_player.py --path ${YOUR_FOLDER}`
