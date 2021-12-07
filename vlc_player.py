@@ -3,7 +3,7 @@ from vlc import Instance
 import time
 
 TIME_BUFFER = 2
-MIN_SECS_INTERVAL = 0.5
+MIN_SECS_INTERVAL = 1.5
 
 
 def seconds_since_timestep(timestep):
