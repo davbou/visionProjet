@@ -49,7 +49,7 @@ def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames):
         classes_buffer.append(className)
         if len(set(classes_buffer)) > 1:
             classes_buffer = classes_buffer[-1:]
-        elif len(classes_buffer) >= 2:
+        elif len(classes_buffer) >= 4:
             action = record_action_on_player(player, className)
 
             cv2.putText(frame, action, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
