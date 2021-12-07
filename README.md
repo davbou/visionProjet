@@ -26,3 +26,5 @@ Par défaut, le code ira lire le dossier `music` situé à la racine de votre pr
 Le répertoire fourni contient des classiques des fêtes, mais vous pouvez modifier son contenu librement ou encore spécifier votre propre dossier contenant le répertoire de fichiers audio au format mp3 de votre choix :
 
 `python gesture_music_player.py --path ${YOUR_FOLDER}`
+
+Pour mettre un terme au programme, il suffit d'entrer la touche `q` sur le clavier.
