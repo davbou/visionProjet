@@ -7,8 +7,11 @@ from vlc_player import VLCPlayer
 from argparse import ArgumentParser
 
 
+BUFFER_SIZE = 4
+
 def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames):
     classes_buffer = []
+    buffer_size = BUFFER_SIZE
 
     while True:
         # Read each frame from the webcam
@@ -20,7 +23,7 @@ def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames):
         frame = cv2.flip(frame, 1)
         framergb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        put_legend_on_frame(frame)
+        put_legend_on_frame(frame, buffer_size)
 
         # Get hand landmark prediction
         result = hands.process(framergb)
@@ -49,26 +52,34 @@ def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames):
         classes_buffer.append(className)
         if len(set(classes_buffer)) > 1:
             classes_buffer = classes_buffer[-1:]
-        elif len(classes_buffer) >= 4:
+        elif len(classes_buffer) >= buffer_size:
             action = record_action_on_player(player, className)
 
             cv2.putText(frame, action, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
+        key_press = cv2.waitKey(1)
+        if key_press == ord("q"):
+            break
+
+        elif key_press == ord("j"):
+            if buffer_size > 1:
+                buffer_size -= 1
+
+        elif key_press == ord("k"):
+            buffer_size += 1
+
         # Show the final output
         cv2.imshow("Output", frame)
 
-        if cv2.waitKey(1) == ord("q"):
-            break
 
-
-def put_legend_on_frame(frame):
-    orig_point = (10, 360)
+def put_legend_on_frame(frame, buffer_size):
+    orig_point = (10, 340)
     fontscale = 0.6
     color = (255, 0, 0)
     thickness = 1
     y_increment = 25
 
-    lines = ["Legende:", "Peace -> Play", "Main Pleine -> Pause", "Thumbs up -> Next", "Thumbs down -> Previous"]
+    lines = ["Legende:", "Peace -> Play", "Main Pleine -> Pause", "Thumbs up -> Next", "Thumbs down -> Previous", f"Buffer Size: {buffer_size}"]
 
     for i, line in enumerate(lines):
         cv2.putText(
