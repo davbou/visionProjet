@@ -7,11 +7,8 @@ from vlc_player import VLCPlayer
 from argparse import ArgumentParser
 
 
-BUFFER_SIZE = 4
-
-def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames):
+def main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames, buffer_size):
     classes_buffer = []
-    buffer_size = BUFFER_SIZE
 
     while True:
         # Read each frame from the webcam
@@ -111,11 +108,11 @@ def record_action_on_player(player, className):
 
 def main(args):
     # initialize vlc player
-    player = VLCPlayer(args.path)
+    player = VLCPlayer(args.music_path)
 
     # initialize mediapipe
     mpHands = mp.solutions.hands
-    hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=0.8)
+    hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=args.detection_confidence)
     mpDraw = mp.solutions.drawing_utils
 
     # Load the gesture recognizer model
@@ -126,9 +123,12 @@ def main(args):
         classNames = f.read().split("\n")
 
     # Initialize the webcam
-    cap = cv2.VideoCapture(0)
+    if args.video_path == "camera":
+        cap = cv2.VideoCapture(0)
+    else:
+        cap = cv2.VideoCapture(args.video_path)
 
-    main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames)
+    main_cam_loop(player, mpHands, hands, mpDraw, model, cap, classNames, args.buffer_size)
 
     # release the webcam and destroy all active windows
     cap.release()
@@ -139,7 +139,10 @@ def main(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
 
-    parser.add_argument("--path", type=str, default="music", help="Path containing mp3 audio files.")
+    parser.add_argument("--music_path", type=str, default="music", help="Path containing mp3 audio files.")
+    parser.add_argument("--video_path", type=str, default="camera", help="Path containing mp4 video file.")
+    parser.add_argument("--buffer_size", type=int, default=4, help="Buffer size for class predictions.")
+    parser.add_argument("--detection_confidence", type=float, default=0.8, help="Detection confidence class predictions.")
 
     args = parser.parse_args()
     main(parser.parse_args())
