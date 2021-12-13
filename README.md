@@ -32,4 +32,4 @@ Pour mettre un terme au programme, il suffit d'entrer la touche `q` sur le clavi
 ## Contenu du répertoire
 
 Le vidéo final publié sur Youtube ainsi que les vidéos obtenus pour chacune des configurations testées se trouvent dans le dossier `output`.
-Le vidéo de test utilisé pour nos expériences se trouve dans le dossier `input`.
+Le vidéo de test utilisé pour nos expériences se trouve dans le dossier `video`.
