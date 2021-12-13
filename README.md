@@ -28,3 +28,8 @@ Le répertoire fourni contient des classiques des fêtes, mais vous pouvez modif
 `python gesture_music_player.py --path ${YOUR_FOLDER}`
 
 Pour mettre un terme au programme, il suffit d'entrer la touche `q` sur le clavier.
+
+## Contenu du répertoire
+
+Le vidéo final publié sur Youtube ainsi que les vidéos obtenus pour chacune des configurations testées se trouvent dans le dossier `output`.
+Le vidéo de test utilisé pour nos expériences se trouve dans le dossier `input`.
